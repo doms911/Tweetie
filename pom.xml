@@ -118,7 +118,7 @@
                             <generator>
                                 <name>org.jooq.codegen.DefaultGenerator</name>
                                 <database>
-                                    <!-- čita DDL iz schema.sql -->
+                                    <!-- read DDL from schema.sql -->
                                     <name>org.jooq.meta.extensions.ddl.DDLDatabase</name>
                                     <properties>
                                         <property>
@@ -155,12 +155,6 @@
                         <version>2.2.224</version>
                     </dependency>
                 </dependencies>
-            </plugin>
-
-            <!-- Spring Boot plugin -->
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 		</plugins>
 	</build>
