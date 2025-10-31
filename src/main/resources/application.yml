@@ -1,3 +1,26 @@
 spring:
   application:
     name: Tweetie
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;MODE=PostgreSQL
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema.sql
+      data-locations: classpath:data.sql
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  security:
+    user:
+      name: admin
+      password: admin
+      roles: ADMIN
+
+logging:
+  level:
+    org.jooq.tools.LoggerListener: DEBUG
