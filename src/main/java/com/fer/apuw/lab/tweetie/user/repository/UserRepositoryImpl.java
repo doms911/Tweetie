@@ -6,6 +6,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+
 import static com.example.jooq.tables.AppUser.APP_USER;
 
 @Slf4j
@@ -15,24 +18,27 @@ public class UserRepositoryImpl implements UserRepository {
     private final DSLContext ctx;
 
     @Override
-    public User getUserById(long id) {
+    public Optional<User> getUserById(long id) {
         return ctx.selectFrom(APP_USER)
                 .where(APP_USER.ID.eq(id))
-                .fetchOneInto(User.class);
+                .and(APP_USER.DELETED_AT.isNull())
+                .fetchOptionalInto(User.class);
     }
 
     @Override
-    public User getUserByUsername(String username) {
+    public Optional<User> getUserByUsername(String username) {
         return ctx.selectFrom(APP_USER)
                 .where(APP_USER.USERNAME.eq(username))
-                .fetchOneInto(User.class);
+                .and(APP_USER.DELETED_AT.isNull())
+                .fetchOptionalInto(User.class);
     }
 
     @Override
-    public User getUserByEmail(String email) {
+    public Optional<User> getUserByEmail(String email) {
         return ctx.selectFrom(APP_USER)
                 .where(APP_USER.EMAIL.eq(email))
-                .fetchOneInto(User.class);
+                .and(APP_USER.DELETED_AT.isNull())
+                .fetchOptionalInto(User.class);
     }
 
     @Override
@@ -41,7 +47,7 @@ public class UserRepositoryImpl implements UserRepository {
                 .set(APP_USER.USERNAME, user.getUsername())
                 .set(APP_USER.EMAIL, user.getEmail())
                 .set(APP_USER.PASSWORD, user.getPassword())
-                .set(APP_USER.CREATED_AT, user.getCreatedAt())
+                .set(APP_USER.CREATED_AT, LocalDateTime.now())
                 .returning()
                 .fetchOneInto(User.class);
     }
@@ -59,13 +65,14 @@ public class UserRepositoryImpl implements UserRepository {
             update.addValue(APP_USER.PASSWORD, user.getPassword());
         }
         update.addConditions(APP_USER.ID.eq(user.getId()));
+        update.addConditions(APP_USER.DELETED_AT.isNull());
         update.execute();
     }
 
     @Override
     public void deleteUser(User user) {
         ctx.update(APP_USER)
-                .set(APP_USER.DELETED_AT, user.getDeletedAt())
+                .set(APP_USER.DELETED_AT, LocalDateTime.now())
                 .where(APP_USER.ID.eq(user.getId()))
                 .execute();
     }
