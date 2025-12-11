@@ -1,21 +1,28 @@
 package com.fer.apuw.lab.tweetie.user.repository;
 
 import com.fer.apuw.lab.tweetie.user.model.User;
-import org.springframework.stereotype.Repository;
-
+import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository {
     
-    Optional<User> getUserById(long id);
+    Optional<User> getUserById(Long id);
+
+    List<User> getAllUsers();
 
     Optional<User> getUserByUsername(String username);
 
     Optional<User> getUserByEmail(String email);
 
+    boolean existByUsername(String username);
+
+    boolean existByEmail(String email);
+
     User createUser(User user);
 
-    void updateUser(User user);
+    Optional<User> updateUser(User user);
 
-    void deleteUser(User user);
+    Optional<User> updateUserPassword(User user);
+
+    boolean softDeleteUserById(Long id);
 }
