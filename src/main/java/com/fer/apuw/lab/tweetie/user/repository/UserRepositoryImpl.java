@@ -91,11 +91,14 @@ public class UserRepositoryImpl implements UserRepository {
 
         if (user.getId() != null) {
             update.addValue(APP_USER.USERNAME, user.getUsername());
-
         }
 
         if (user.getEmail() != null) {
             update.addValue(APP_USER.EMAIL, user.getEmail());
+        }
+
+        if (user.getRoleType() != null) {
+            update.addValue(APP_USER.ROLE_TYPE, user.getRoleType().name());
         }
 
         update.addConditions(APP_USER.ID.eq(user.getId()));
