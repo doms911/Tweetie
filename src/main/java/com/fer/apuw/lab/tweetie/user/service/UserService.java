@@ -4,6 +4,7 @@ import com.fer.apuw.lab.tweetie.user.dto.UserCreateDTO;
 import com.fer.apuw.lab.tweetie.user.dto.UserPasswordDTO;
 import com.fer.apuw.lab.tweetie.user.dto.UserRequestDTO;
 import com.fer.apuw.lab.tweetie.user.dto.UserResponseDTO;
+import com.fer.apuw.lab.tweetie.user.enums.RoleType;
 import com.fer.apuw.lab.tweetie.user.mapper.UserMapper;
 import com.fer.apuw.lab.tweetie.user.model.User;
 import com.fer.apuw.lab.tweetie.user.repository.UserRepository;
