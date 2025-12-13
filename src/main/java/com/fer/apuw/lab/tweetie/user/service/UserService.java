@@ -4,16 +4,17 @@ import com.fer.apuw.lab.tweetie.user.dto.UserCreateDTO;
 import com.fer.apuw.lab.tweetie.user.dto.UserPasswordDTO;
 import com.fer.apuw.lab.tweetie.user.dto.UserRequestDTO;
 import com.fer.apuw.lab.tweetie.user.dto.UserResponseDTO;
-import com.fer.apuw.lab.tweetie.user.enums.RoleType;
 import com.fer.apuw.lab.tweetie.user.mapper.UserMapper;
 import com.fer.apuw.lab.tweetie.user.model.User;
 import com.fer.apuw.lab.tweetie.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -76,7 +77,7 @@ public class UserService {
     }
 
     public Optional<UserResponseDTO> updateUser(Long id, UserRequestDTO userRequestDTO) {
-        if (userRequestDTO == null || id  == null) {
+        if (userRequestDTO == null || id == null) {
             return Optional.empty();
         }
         Optional<User> user = userRepository.getUserById(id);
