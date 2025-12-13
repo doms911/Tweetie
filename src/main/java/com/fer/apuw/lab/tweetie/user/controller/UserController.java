@@ -1,5 +1,7 @@
 package com.fer.apuw.lab.tweetie.user.controller;
 
+import com.fer.apuw.lab.tweetie.post.dto.PostResponseDTO;
+import com.fer.apuw.lab.tweetie.post.service.PostService;
 import com.fer.apuw.lab.tweetie.user.dto.UserCreateDTO;
 import com.fer.apuw.lab.tweetie.user.dto.UserPasswordDTO;
 import com.fer.apuw.lab.tweetie.user.dto.UserRequestDTO;
@@ -9,18 +11,21 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @Tag(name = "Users", description = "User management")
 @Controller
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final PostService postService;
 
     @Operation(summary = "Get all users", description = "Retrieve a list of all users")
     @GetMapping
@@ -34,6 +39,12 @@ public class UserController {
         return userService.getUserById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @Operation(summary = "Get posts for a user by ID", description = "Retrieve a list of users's posts")
+    @GetMapping("/{id}/posts")
+    public ResponseEntity<List<PostResponseDTO>> getUserPosts(@PathVariable Long id) {
+        return ResponseEntity.ok(postService.getPostsByUserId(id));
     }
 
     @Operation(summary = "Create a new user", description = "Create a user with username, email, password, and role")
