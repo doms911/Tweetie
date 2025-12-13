@@ -21,11 +21,7 @@ public class UserService {
     private final UserMapper userMapper;
 
     public UserResponseDTO createUser(UserCreateDTO userCreateDTO) {
-        User user = userMapper.toModel(userCreateDTO);
-        if (user.getRoleType() == null) {
-            user.setRoleType(RoleType.ROLE_USER);
-        }
-        return userMapper.toResponse(userRepository.createUser(user));
+        return userMapper.toResponse(userRepository.createUser(userMapper.toModel(userCreateDTO)));
     }
 
     public List<UserResponseDTO> getAllUsers() {

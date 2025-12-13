@@ -17,6 +17,4 @@ public class UserRequestDTO {
 
     @Email
     private String email;
-
-    private RoleType roleType;
 }

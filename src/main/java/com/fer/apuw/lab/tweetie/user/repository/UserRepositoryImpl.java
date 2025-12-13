@@ -1,5 +1,6 @@
 package com.fer.apuw.lab.tweetie.user.repository;
 
+import com.fer.apuw.lab.tweetie.user.enums.RoleType;
 import com.fer.apuw.lab.tweetie.user.model.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -78,6 +79,7 @@ public class UserRepositoryImpl implements UserRepository {
         return ctx.insertInto(APP_USER)
                 .set(APP_USER.USERNAME, user.getUsername())
                 .set(APP_USER.EMAIL, user.getEmail())
+                .set(APP_USER.ROLE_TYPE, RoleType.ROLE_USER.name())
                 .set(APP_USER.PASSWORD, hashedPwd)
                 .set(APP_USER.CREATED_AT, LocalDateTime.now())
                 .returning()
@@ -95,10 +97,6 @@ public class UserRepositoryImpl implements UserRepository {
 
         if (user.getEmail() != null) {
             update.addValue(APP_USER.EMAIL, user.getEmail());
-        }
-
-        if (user.getRoleType() != null) {
-            update.addValue(APP_USER.ROLE_TYPE, user.getRoleType().name());
         }
 
         update.addConditions(APP_USER.ID.eq(user.getId()));

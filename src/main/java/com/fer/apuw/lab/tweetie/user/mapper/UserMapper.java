@@ -25,7 +25,8 @@ public interface UserMapper {
 
     @Mapping(target = "username", expression = "java(userRequestDTO.getUsername().toLowerCase())")
     @Mapping(target = "email", expression = "java(userRequestDTO.getEmail().toLowerCase())")
-    void updateFromDto(UserRequestDTO userCreateDTO, @MappingTarget User user);
+    @Mapping(target = "roleType", ignore = true)
+    void updateFromDto(UserRequestDTO userRequestDTO, @MappingTarget User user);
 
     void updateFromDto(UserPasswordDTO userPasswordDTO, @MappingTarget User user);
 }
