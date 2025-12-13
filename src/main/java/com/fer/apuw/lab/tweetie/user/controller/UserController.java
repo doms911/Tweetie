@@ -5,6 +5,7 @@ import com.fer.apuw.lab.tweetie.user.dto.UserPasswordDTO;
 import com.fer.apuw.lab.tweetie.user.dto.UserRequestDTO;
 import com.fer.apuw.lab.tweetie.user.dto.UserResponseDTO;
 import com.fer.apuw.lab.tweetie.user.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -31,14 +32,14 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserResponseDTO> createUser(@RequestBody UserCreateDTO userCreateDTO) {
+    public ResponseEntity<UserResponseDTO> createUser(@Valid @RequestBody UserCreateDTO userCreateDTO) {
         UserResponseDTO userResponseDTO = userService.createUser(userCreateDTO);
-        return ResponseEntity.ok(userResponseDTO);
+        return ResponseEntity.status(201).body(userResponseDTO);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id,
-                                                      @RequestBody UserRequestDTO userRequestDTO) {
+                                                      @Valid @RequestBody UserRequestDTO userRequestDTO) {
         return userService.updateUser(id, userRequestDTO)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -46,14 +47,14 @@ public class UserController {
 
     @PutMapping("/{id}/password")
     public ResponseEntity<UserResponseDTO> updateUserPassword(@PathVariable Long id,
-                                                      @RequestBody UserPasswordDTO userPasswordDTO) {
+                                                      @Valid @RequestBody UserPasswordDTO userPasswordDTO) {
         return userService.updateUserPassword(id, userPasswordDTO)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<UserResponseDTO> deleteUser(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         boolean deleted = userService.deleteUser(id);
         return deleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }

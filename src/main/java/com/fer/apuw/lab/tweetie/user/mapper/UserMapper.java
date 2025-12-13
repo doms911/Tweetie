@@ -19,14 +19,12 @@ public interface UserMapper {
 
     List<UserResponseDTO> toResponse(List<User> users);
 
-    @Mapping(target = "username", expression = "java(user.getUsername().toLowerCase())")
-    @Mapping(target = "email", expression = "java(user.getEmail().toLowerCase())")
-    @Mapping(target = "roleType", expression = "java(user.getRoleType().name().toUpperCase())")
+    @Mapping(target = "username", expression = "java(userCreateDTO.getUsername().toLowerCase())")
+    @Mapping(target = "email", expression = "java(userCreateDTO.getEmail().toLowerCase())")
     User toModel(UserCreateDTO userCreateDTO);
 
-    @Mapping(target = "username", expression = "java(user.getUsername().toLowerCase())")
-    @Mapping(target = "email", expression = "java(user.getEmail().toLowerCase())")
-    @Mapping(target = "roleType", expression = "java(user.getRoleType().name().toUpperCase())")
+    @Mapping(target = "username", expression = "java(userRequestDTO.getUsername().toLowerCase())")
+    @Mapping(target = "email", expression = "java(userRequestDTO.getEmail().toLowerCase())")
     void updateFromDto(UserRequestDTO userCreateDTO, @MappingTarget User user);
 
     void updateFromDto(UserPasswordDTO userPasswordDTO, @MappingTarget User user);
