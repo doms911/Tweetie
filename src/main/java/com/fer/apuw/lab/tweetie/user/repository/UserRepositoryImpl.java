@@ -1,6 +1,5 @@
 package com.fer.apuw.lab.tweetie.user.repository;
 
-import com.fer.apuw.lab.tweetie.user.enums.RoleType;
 import com.fer.apuw.lab.tweetie.user.model.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
