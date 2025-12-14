@@ -4,6 +4,7 @@ import com.fer.apuw.lab.tweetie.user.dto.UserCreateDTO;
 import com.fer.apuw.lab.tweetie.user.dto.UserPasswordDTO;
 import com.fer.apuw.lab.tweetie.user.dto.UserRequestDTO;
 import com.fer.apuw.lab.tweetie.user.dto.UserResponseDTO;
+import com.fer.apuw.lab.tweetie.user.enums.RoleType;
 import com.fer.apuw.lab.tweetie.user.mapper.UserMapper;
 import com.fer.apuw.lab.tweetie.user.model.User;
 import com.fer.apuw.lab.tweetie.user.repository.UserRepository;
@@ -22,7 +23,15 @@ public class UserService {
     private final UserMapper userMapper;
 
     public UserResponseDTO createUser(UserCreateDTO userCreateDTO) {
-        return userMapper.toResponse(userRepository.createUser(userMapper.toModel(userCreateDTO)));
+        User user = userMapper.toModel(userCreateDTO);
+        user.setRoleType(RoleType.USER);
+        return userMapper.toResponse(userRepository.createUser(user));
+    }
+
+    public UserResponseDTO createAdmin(UserCreateDTO userCreateDTO) {
+        User user = userMapper.toModel(userCreateDTO);
+        user.setRoleType(RoleType.ADMIN);
+        return userMapper.toResponse(userRepository.createUser(user));
     }
 
     public List<UserResponseDTO> getAllUsers() {
