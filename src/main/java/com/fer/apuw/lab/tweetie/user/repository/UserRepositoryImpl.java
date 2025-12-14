@@ -79,7 +79,7 @@ public class UserRepositoryImpl implements UserRepository {
         return ctx.insertInto(APP_USER)
                 .set(APP_USER.USERNAME, user.getUsername())
                 .set(APP_USER.EMAIL, user.getEmail())
-                .set(APP_USER.ROLE_TYPE, RoleType.ROLE_USER.name())
+                .set(APP_USER.ROLE_TYPE, RoleType.USER.name())
                 .set(APP_USER.PASSWORD, hashedPwd)
                 .set(APP_USER.CREATED_AT, LocalDateTime.now())
                 .returning()
