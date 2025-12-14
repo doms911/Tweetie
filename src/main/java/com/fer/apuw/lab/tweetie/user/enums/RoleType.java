@@ -7,8 +7,8 @@ import java.util.Arrays;
 
 public enum RoleType {
 
-    ROLE_USER,
-    ROLE_ADMIN;
+    USER,
+    ADMIN;
 
     @JsonCreator
     public static RoleType fromValue(String value) {
